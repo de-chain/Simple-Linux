@@ -32,7 +32,8 @@ gpg --export-secret-key –armor 1EE95C6C16C5CF118A774037991970A0D80145F5 > uten
 ----
 gpg --export --armor 1EE95C6C16C5CF118A774037991970A0D80145F5 > utente.pub
 ----
-“esporto la mia chiave pubblica in file ascii che apro con cat, da fornire a chi vuole inviarmi messaggi cifrati che decifrerò con mia chiave privata”
+“esporto la mia chiave pubblica in file ascii che apro con cat, da fornire a chi vuole inviarmi messaggi cifrati che decifrerò con mia chiave privata.”
+
 == Copiare chiave privata su USB per tenerla separata da PC
     • ls -la .gnupg/
       vedo le directory presenti nella cartella nascosta .gnupg, tra queste trovo private-keys-v1.d
