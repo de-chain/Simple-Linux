@@ -7,7 +7,7 @@ _Arguing that you don't care about the right to privacy because you have nothing
 Edward Snowden
 
 
-*OpenPGP* (Pretty Good Privacy) è lo standard di crittografia,*GnuPG* è il programma che implementa lo standard.
+*OpenPGP* (Pretty Good Privacy) è lo standard di crittografia, *GnuPG* è il programma che implementa lo standard.
 
 == Creare chiave asimmetrica
 [Source, bash]
