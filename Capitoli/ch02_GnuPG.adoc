@@ -1,7 +1,63 @@
 = GnuPG
 
+image::https://raw.githubusercontent.com/de-chain/Simple-Linux/5c00426514c2c2603b638c1a8b5cb988662991b6/Immagini/GnuPG.png[GnuPG Logo, 300, auto]
+
 _Arguing that you don't care about the right to privacy because you have nothing to hide is no different from saying you don't care about free speech because you have nothing to say._
 
 Edward Snowden
 
-Immagini: :Immagini/GnuPG.png["Transaction Double-Entry"]
+
+*OpenPGP* (Pretty Good Privacy) è lo standard di crittografia,*GnuPG* è il programma che implementa lo standard.
+
+== Creare chiave asimmetrica
+[Source, bash]
+----
+ gpg –full-generate-key
+----
+"RSA 4096 con passphrase"
+----
+gpg –list-keys
+gpg --expert --edit-key 1EE95C6C16C5CF118A774037991970A0D80145F5
+gpg> addkey 
+----
+"subkey per firmare opzione 4 RSA 4096 solo segno"
+----
+gpg>save
+----
+“salvo modifiche e esco “
+----
+gpg --export-secret-key –armor 1EE95C6C16C5CF118A774037991970A0D80145F5 > utente.priv
+----
+“esporto la mia chiave privata in file ascii che apro con cat”
+----
+gpg --export --armor 1EE95C6C16C5CF118A774037991970A0D80145F5 > utente.pub
+----
+“esporto la mia chiave pubblica in file ascii che apro con cat, da fornire a chi vuole inviarmi messaggi cifrati che decifrerò con mia chiave privata”
+== Copiare chiave privata su USB per tenerla separata da PC
+    • ls -la .gnupg/
+      vedo le directory presenti nella cartella nascosta .gnupg, tra queste trovo private-keys-v1.d
+    • ls -la .gnupg/private-keys-v1.d
+      la apro e vedrò la mia chiave privata
+
+    • creo su chiavetta esterna volume cifrato veracrypt e lo monto, bastano 16 mb
+
+    • df -m
+      verifico che il volume sia montato e vedo il percorso di solito /media/veracrypt1
+    • cd .gnupg/
+    • ls o ls -la
+      mi sposto su directory .gnupg e vedo cosa contiene
+    • mv private-keys-v1.d/ /media/veracrypt1
+      spsoto private-keys-v1 su media/veracrypt
+    • ln -s /media/veracrypt1/private-keys-v1.d/ ./private-keys-v1.d
+      da media veracrypt1 lo collego alla cartella .gnupg
+    • gpg –list-keys
+      interrogo le chiavi e me le vede perché è collegata e il volume media veracrypt è apertocd
+E’ importante che il punto di montaggio del volume sia sempre lo stesso, nel nostro caso veracrypt1 altrimenti il collegamento non funziona
+
+== Criptare e decriptare file
+    • gpg --encrypt --armor -r utente7@mail.com miofile.txt
+      “cripta mifile.txt che diventa miofile.txt.asc”
+
+    • gpg --decrypt miofile.txt.asc
+      “ls -la .gnupg
+    • chiede passphrase della mia chiave privata e decifra il file”
